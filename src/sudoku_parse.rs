@@ -1,15 +1,15 @@
 enum Number {
-    One = 0x30,
-    Nine = 0x39,
+    ZERO = 0x30,
+    NINE = 0x39,
 }
 
 fn is_digit_in_range(number: u8) -> bool {
-    number < Number::One as u8 || number > Number::Nine as u8
+    number >= Number::ZERO as u8 && number <= Number::NINE as u8
 }
 
 fn check_numbers<'a>(numbers: &'a &'a str) -> Option<&'a &'a str> {
     for n in numbers.bytes() {
-        if is_digit_in_range(n) {
+        if !is_digit_in_range(n) {
             return None;
         }
     }
