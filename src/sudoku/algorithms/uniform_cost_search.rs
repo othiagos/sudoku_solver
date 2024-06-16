@@ -11,7 +11,7 @@ struct UniformCostSearch {
 }
 
 impl UniformCostSearch {
-    fn new(sudoku: Vec<Vec<u8>>) -> UniformCostSearch {
+    fn new(sudoku: Vec<Vec<u8>>) -> Self {
         let mut n = 0;
 
         for i in 0..sudoku.len() {
@@ -22,7 +22,7 @@ impl UniformCostSearch {
             }
         }
 
-        UniformCostSearch {
+        Self {
             lines: sudoku,
             zero_count: n,
             curr_pos: (0, 0),
@@ -43,7 +43,7 @@ impl UniformCostSearch {
                 start_col_range = 0
             }
 
-            for j in start_col_range as usize..self.lines.len() {
+            for j in start_col_range..self.lines.len() {
                 if self.lines[i][j] == 0 {
                     self.curr_pos = (i, j);
                     return Some(self.curr_pos);
@@ -65,30 +65,26 @@ impl UniformCostSearch {
 
             let pos = match curr_option {
                 Some(pos) => pos,
-                None => return Some((expanded_nodes, curr.lines))
+                None => return Some((expanded_nodes, curr.lines)),
             };
 
-            let available_moves = get_available_moves(&curr.lines, pos).unwrap();
-            for n in available_moves.iter() {
+            for n in get_available_moves(&curr.lines, pos) {
                 expanded_nodes += 1;
 
                 let mut next_sudoku = curr.clone();
-                next_sudoku.add_number(*n);
+                next_sudoku.add_number(n);
 
                 if next_sudoku.zero_count == 0 {
                     return Some((expanded_nodes, next_sudoku.lines));
                 }
-                
-                heap.push(Reverse(next_sudoku));
 
+                heap.push(Reverse(next_sudoku));
             }
         }
-
-        Some((0, self.lines.clone()))
+        None
     }
 }
 
 pub fn solve(sudoku: Vec<Vec<u8>>) -> Option<(u64, Vec<Vec<u8>>)> {
-    let s = UniformCostSearch::new(sudoku);
-    s.solve()
+    UniformCostSearch::new(sudoku).solve()
 }
