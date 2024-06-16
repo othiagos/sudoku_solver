@@ -35,9 +35,12 @@ pub fn get_available_moves(sudoku: &Vec<Vec<u8>>, pos: (usize, usize)) -> Vec<u8
     set.into_iter().collect()
 }
 
-pub fn solve(_alg: char, sudoku: Vec<Vec<u8>>) -> (u128, Option<(u64, Vec<Vec<u8>>)>) {
+pub fn solve(alg: char, sudoku: Vec<Vec<u8>>) -> (u128, Option<(u64, Vec<Vec<u8>>)>) {
     let start = Instant::now();
-    let sudoku_option = algorithms::uniform_cost_search::solve(sudoku);
+    let sudoku_option = match alg {
+        'U' => algorithms::uniform_cost_search::solve(sudoku),
+        _ => panic!("Invalid option"),
+    };
 
     (start.elapsed().as_millis(), sudoku_option)
 }
