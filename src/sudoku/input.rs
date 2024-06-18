@@ -44,7 +44,7 @@ pub fn parse(sudoku_lines: Vec<String>) -> Vec<Vec<u8>> {
     }
 
     match check_lines(sudoku_lines) {
-        Some(vec) => return vec,
+        Some(vec) => vec,
         None => panic!("{}", msg),
     }
 }

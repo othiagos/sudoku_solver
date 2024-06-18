@@ -1,15 +1,15 @@
-pub fn print(solution: (u128, Option<(u64, Vec<Vec<u8>>)>)) {
-    let (elapse_time, sudoku_option) = solution;
-    println!("elapse_time: {}", elapse_time);
+use super::solver::Solution;
 
-    let sudoku = match sudoku_option {
+pub fn print(solution: Solution) {
+    println!("elapse_time: {}", solution.get_expand_nodes());
+
+    let sudoku = match solution.get_solution() {
         Some(sudoku) => sudoku,
         None => panic!("Can not find a solution"),
     };
 
     println!("expanded_nodes: {}", sudoku.0);
-    for line in sudoku.1 {
+    for line in &sudoku.1 {
         println!("{:?}", line)
     }
-    println!("");
 }
