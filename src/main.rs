@@ -9,8 +9,8 @@ fn main() {
         panic!("Insufficient arguments");
     }
 
-    let sudoku_lines = sudoku::input::read(&args[1]);
-    let sudoku_lines = sudoku::input::parse(sudoku_lines);
+    let sudoku_lines = sudoku::io::read(&args[1]);
+    let sudoku_lines = sudoku::io::parse(sudoku_lines);
     let sudoku_solution = sudoku::solver::solve('U', sudoku_lines);
-    sudoku::out::print(sudoku_solution);
+    sudoku::io::print(sudoku_solution);
 }

@@ -1,4 +1,3 @@
 mod algorithms;
-pub mod input;
-pub mod out;
+pub mod io;
 pub mod solver;
